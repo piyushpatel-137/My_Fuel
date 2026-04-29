@@ -1,5 +1,4 @@
-require("dotenv").config();
-
+require("./config/env");
 const express = require("express");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
@@ -9,14 +8,14 @@ const fuelRoutes = require("./routes/fuelRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+const allowedOrigins = (process.env.FRONTEND_URL || "")
   .split(",")
-  .map((origin) => origin.trim());
-
+  .map(origin => origin.trim());
+  
 app.use(cors({
   origin(origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+    return callback(null, true);
     }
     return callback(new Error("Not allowed by CORS"));
   },
