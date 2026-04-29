@@ -29,7 +29,7 @@ const Dashboard = () => {
     setLoading(true);
     setError("");
     try {
-      const { data } = await api.get("/api/stats/dashboard");
+      const { data } = await api.get("/api/fuel/stats/dashboard");
       setStats(data);
     } catch (err) {
       setError(getErrorMessage(err));
