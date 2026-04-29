@@ -37,6 +37,9 @@ const sendOtp = async (event) => {
 } catch (err) {
   setNotice({ tone: "error", text: getErrorMessage(err) });
 }
+finally {
+    setLoading(false);
+  }
 };
 
   const submit = async (event) => {
