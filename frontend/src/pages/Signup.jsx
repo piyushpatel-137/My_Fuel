@@ -32,7 +32,6 @@ const sendOtp = async (event) => {
   try {
   const { data } = await api.post("/api/auth/signup/send-otp", { email: form.email });
 
-  setDevOtp(data?.devOtp || "");
   setNotice({ tone: "success", text: data.message });
   setStep(2);
 } catch (err) {
