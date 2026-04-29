@@ -45,9 +45,11 @@ const sendOtp = async (event) => {
     setNotice({ tone: "", text: "" });
     try {
       await completeSignup(form);
+      setLoading(false);
       navigate("/dashboard");
     } catch (err) {
       setNotice({ tone: "error", text: getErrorMessage(err) });
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -71,7 +73,6 @@ const sendOtp = async (event) => {
 
         <div className="mt-5 space-y-3">
           <Notice tone={notice.tone || "info"}>{notice.text}</Notice>
-          {devOtp && <Notice tone="info">Dev OTP: {devOtp}</Notice>}
         </div>
 
         {step === 1 ? (
