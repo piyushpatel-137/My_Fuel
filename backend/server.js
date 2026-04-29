@@ -31,7 +31,7 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
 });
 
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/bikes", bikeRoutes);
 app.use("/api/fuel", fuelRoutes);
 
