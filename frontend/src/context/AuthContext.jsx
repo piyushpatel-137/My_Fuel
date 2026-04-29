@@ -43,13 +43,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (payload) => {
-    const { data } = await api.post("/auth/login", payload);
+    const { data } = await api.post("/api/auth/login", payload);
     saveSession(data);
     return data;
   };
 
   const completeSignup = async (payload) => {
-    const { data } = await api.post("/auth/signup/verify", payload);
+    const { data } = await api.post("/api/auth/signup/verify", payload);
     saveSession(data);
     return data;
   };
