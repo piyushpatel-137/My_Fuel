@@ -9,6 +9,8 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "sib-api-v3-sdk": "^8.5.0"
   }
 }
-
