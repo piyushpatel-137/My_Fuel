@@ -7,6 +7,7 @@ const isRealCredential = (value) => {
 
 const createTransporter = () => {
   if (!isRealCredential(process.env.EMAIL_USER) || !isRealCredential(process.env.EMAIL_PASS)) {
+    console.log("❌ Email credentials missing or invalid");
     return null;
   }
 
@@ -28,23 +29,30 @@ const sendOtpEmail = async ({ email, otp, purpose }) => {
     return { sent: false };
   }
 
-  await transporter.sendMail({
-    from: `"MyFuel" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject: title,
-    html: `
-      <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px;">
-        <h2 style="margin:0 0 12px;color:#0369a1;">${title}</h2>
-        <p style="color:#334155;">Use this OTP to continue. It is valid for 10 minutes.</p>
-        <div style="font-size:32px;font-weight:700;letter-spacing:8px;color:#0f172a;background:#e0f2fe;padding:18px;border-radius:10px;text-align:center;">
-          ${otp}
+  try {
+    await transporter.sendMail({
+      from: `"MyFuel" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: title,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px;">
+          <h2 style="margin:0 0 12px;color:#0369a1;">${title}</h2>
+          <p style="color:#334155;">Use this OTP to continue. It is valid for 10 minutes.</p>
+          <div style="font-size:32px;font-weight:700;letter-spacing:8px;color:#0f172a;background:#e0f2fe;padding:18px;border-radius:10px;text-align:center;">
+            ${otp}
+          </div>
+          <p style="color:#64748b;font-size:13px;margin-top:18px;">If you did not request this, you can ignore this email.</p>
         </div>
-        <p style="color:#64748b;font-size:13px;margin-top:18px;">If you did not request this, you can ignore this email.</p>
-      </div>
-    `
-  });
+      `
+    });
 
-  return { sent: true };
+    return { sent: true };
+
+  } catch (err) {
+    console.log("❌ Mail error:", err.message);
+    console.log(`[DEV OTP] ${email} -> ${otp}`);
+    return { sent: false };
+  }
 };
 
 module.exports = { sendOtpEmail };
