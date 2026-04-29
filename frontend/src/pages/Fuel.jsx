@@ -38,7 +38,7 @@ const Fuel = () => {
   );
 
   const loadBikes = async () => {
-    const { data } = await api.get("/bikes");
+    const { data } = await api.get("/api/bikes");
     const nextBikes = data.bikes || [];
     setBikes(nextBikes);
     if (!selectedBikeId && nextBikes.length) {
@@ -51,7 +51,7 @@ const Fuel = () => {
       setEntries([]);
       return;
     }
-    const { data } = await api.get(`/fuel/bike/${bikeId}`);
+    const { data } = await api.get(`/api/fuel/bike/${bikeId}`);
     setEntries(data.entries || []);
   };
 
