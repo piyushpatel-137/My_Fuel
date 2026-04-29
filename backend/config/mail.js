@@ -30,10 +30,10 @@ const sendOtpEmail = async ({ email, otp, purpose }) => {
 
     return { sent: true };
   } catch (err) {
-    console.log("Mail error:", err.message);
-    console.log(`[DEV OTP] ${email} -> ${otp}`);
-    return { sent: false };
-  }
+  console.log("Mail error FULL:", err);
+  console.log(`[DEV OTP] ${email} -> ${otp}`);
+  return { sent: false };
+}
 };
 
 module.exports = { sendOtpEmail };
