@@ -24,21 +24,23 @@ const Signup = () => {
 
   const update = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
-  const sendOtp = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    setNotice({ tone: "", text: "" });
-    try {
-      const { data } = api.post("/api/auth/signup/send-otp", { email: form.email });
-      setDevOtp(data.devOtp || "");
-      setNotice({ tone: "success", text: data.message });
-      setStep(2);
-    } catch (err) {
-      setNotice({ tone: "error", text: getErrorMessage(err) });
-    } finally {
-      setLoading(false);
-    }
-  };
+const sendOtp = async (event) => {
+  event.preventDefault();
+  setLoading(true);
+  setNotice({ tone: "", text: "" });
+
+  try {
+  const { data } = await api.post("/auth/signup/send-otp", {
+    email: form.email
+  });
+
+  setDevOtp(data?.devOtp || "");
+  setNotice({ tone: "success", text: data.message });
+  setStep(2);
+} catch (err) {
+  setNotice({ tone: "error", text: getErrorMessage(err) });
+}
+};
 
   const submit = async (event) => {
     event.preventDefault();
