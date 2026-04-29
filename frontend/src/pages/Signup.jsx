@@ -29,7 +29,7 @@ const Signup = () => {
     setLoading(true);
     setNotice({ tone: "", text: "" });
     try {
-      const { data } = await api.post("/auth/signup/send-otp", { email: form.email });
+      const { data } = api.post("/api/auth/signup/send-otp", { email: form.email });
       setDevOtp(data.devOtp || "");
       setNotice({ tone: "success", text: data.message });
       setStep(2);
