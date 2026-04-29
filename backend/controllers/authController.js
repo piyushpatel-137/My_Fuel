@@ -68,8 +68,7 @@ const sendSignupOtp = asyncHandler(async (req, res) => {
   const { otp, mail } = await createOtp(email, "signup");
 
   res.json({
-  message: mail.sent ? "OTP sent to email" : "OTP generated in server console",
-  devOtp: otp
+  message: mail.sent ? "OTP sent to email" : "OTP generated in server console"
 });
 });
 
