@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const completeSignup = async (payload) => {
-    const { data } = await api.post("/api/auth/signup/verify", payload);
+    const { data } = await api.post("/auth/signup/verify", payload);
     saveSession(data);
     return data;
   };
