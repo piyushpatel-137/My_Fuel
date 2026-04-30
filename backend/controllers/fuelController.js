@@ -128,17 +128,19 @@ const getDashboardStats = asyncHandler(async (req, res) => {
      WHERE b.user_id = ?`,
     [req.user.id]
   );
-
-  const [monthly] = await pool.query(
-    `SELECT DATE_FORMAT(fe.filled_at, '%Y-%m') AS month, COALESCE(SUM(fe.amount), 0) AS amount
-     FROM fuel_entries fe
-     INNER JOIN bikes b ON b.id = fe.bike_id
-     WHERE b.user_id = ?
-     GROUP BY DATE_FORMAT(fe.filled_at, '%Y-%m')
-     ORDER BY month DESC
-     LIMIT 6`,
-    [req.user.id]
-  );
+    
+     const [monthly] = await pool.query(
+  `SELECT 
+    DATE_FORMAT(fe.filled_at, '%Y-%m') AS month, 
+    COALESCE(SUM(fe.amount), 0) AS amount
+   FROM fuel_entries fe
+   INNER JOIN bikes b ON b.id = fe.bike_id
+   WHERE b.user_id = ?
+   GROUP BY month
+   ORDER BY month DESC
+   LIMIT 6`,
+  [req.user.id]
+);
 
   const [recent] = await pool.query(
     `SELECT fe.*, CONCAT(b.brand, ' ', b.model) AS bike_name, b.number AS bike_number
@@ -157,11 +159,11 @@ const getDashboardStats = asyncHandler(async (req, res) => {
       COALESCE(SUM(fe.liters), 0) AS total_liters,
       MAX(fe.odometer) AS latest_odometer,
       ROUND(AVG(fe.mileage), 2) AS average_mileage
-     FROM bikes b
-     LEFT JOIN fuel_entries fe ON fe.bike_id = b.id
-     WHERE b.user_id = ?
-     GROUP BY b.id
-     ORDER BY total_spent DESC, b.created_at DESC`,
+      FROM bikes b
+      LEFT JOIN fuel_entries fe ON fe.bike_id = b.id
+      WHERE b.user_id = ?
+      GROUP BY b.id
+      ORDER BY total_spent DESC, b.created_at DESC`,
     [req.user.id]
   );
 

@@ -19,11 +19,11 @@ const getBikes = asyncHandler(async (req, res) => {
       COALESCE(SUM(fe.liters), 0) AS total_liters,
       MAX(fe.odometer) AS latest_odometer,
       ROUND(AVG(fe.mileage), 2) AS average_mileage
-     FROM bikes b
-     LEFT JOIN fuel_entries fe ON fe.bike_id = b.id
-     WHERE b.user_id = ?
-     GROUP BY b.id
-     ORDER BY b.created_at DESC`,
+      FROM bikes b
+      LEFT JOIN fuel_entries fe ON fe.bike_id = b.id
+      WHERE b.user_id = ?
+      GROUP BY b.id
+      ORDER BY b.created_at DESC`,
     [req.user.id]
   );
 
