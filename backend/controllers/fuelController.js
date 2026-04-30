@@ -153,19 +153,19 @@ const getDashboardStats = asyncHandler(async (req, res) => {
   );
 
   const [bikeSummary] = await pool.query(
-    `SELECT b.id, b.brand, b.model, b.number,
-      COUNT(fe.id) AS entry_count,
-      COALESCE(SUM(fe.amount), 0) AS total_spent,
-      COALESCE(SUM(fe.liters), 0) AS total_liters,
-      MAX(fe.odometer) AS latest_odometer,
-      ROUND(AVG(fe.mileage), 2) AS average_mileage
-      FROM bikes b
-      LEFT JOIN fuel_entries fe ON fe.bike_id = b.id
-      WHERE b.user_id = ?
-      GROUP BY b.id
-      ORDER BY total_spent DESC, b.created_at DESC`,
-    [req.user.id]
-  );
+  `SELECT b.id, b.brand, b.model, b.number,
+    COUNT(fe.id) AS entry_count,
+    COALESCE(SUM(fe.amount), 0) AS total_spent,
+    COALESCE(SUM(fe.liters), 0) AS total_liters,
+    MAX(fe.odometer) AS latest_odometer,
+    ROUND(AVG(fe.mileage), 2) AS average_mileage
+    FROM bikes b
+    LEFT JOIN fuel_entries fe ON fe.bike_id = b.id
+    WHERE b.user_id = ?
+    GROUP BY b.id
+    ORDER BY total_spent DESC, b.id DESC`,
+  [req.user.id]
+);
 
   res.json({
     totals: {
