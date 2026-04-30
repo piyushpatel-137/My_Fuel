@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (payload) => {
-    const { data } = await api.post("/api/auth/login", payload);
+    const { data } = await api.post("/auth/login", payload);
     saveSession(data);
     return data;
   };
