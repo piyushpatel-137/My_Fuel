@@ -29,7 +29,7 @@ const Bikes = () => {
   const loadBikes = async () => {
     setLoading(true);
     try {
-      const { data } = await api.get("/api/bikes");
+      const { data } = await api.get("/bikes");
       setBikes(data.bikes || []);
     } catch (err) {
       setNotice({ tone: "error", text: getErrorMessage(err) });

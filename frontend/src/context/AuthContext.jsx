@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        const { data } = await api.get("/api/auth/me");
+        const { data } = await api.get("/auth/me");
         setUser(data.user);
         localStorage.setItem("myfuel_user", JSON.stringify(data.user));
       } catch (error) {
