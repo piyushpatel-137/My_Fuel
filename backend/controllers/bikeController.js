@@ -23,7 +23,7 @@ const getBikes = asyncHandler(async (req, res) => {
       LEFT JOIN fuel_entries fe ON fe.bike_id = b.id
       WHERE b.user_id = ?
       GROUP BY b.id
-      ORDER BY b.created_at DESC`,
+      ORDER BY b.id DESC`,
     [req.user.id]
   );
 
